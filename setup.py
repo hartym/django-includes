@@ -14,7 +14,8 @@ version = read('version.txt')
 
 setup(
     name = 'django_includes',
-    description = '',
+    description = ('Include django views as a subparts of other django views, using either HTTP '
+ '(with esi or hinclude) or direct render.'),
     license = 'Apache License, Version 2.0',
     install_requires = ['django >=1.9',
  'edgy.event >=0.1,<0.2',
