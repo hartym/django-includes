@@ -1,11 +1,12 @@
 # This file has been auto-generated.
-# All manual changes may be lost, see Projectfile.
+# All changes will be lost, see Projectfile.
 #
-# Date: 2016-06-16 10:05:54.834287
+# Updated at 2016-08-06 13:41:39.083770
 
 PYTHON ?= $(shell which python)
 PYTHON_BASENAME ?= $(shell basename $(PYTHON))
 PYTHON_REQUIREMENTS_FILE ?= requirements.txt
+PYTHON_REQUIREMENTS_DEV_FILE ?= requirements-dev.txt
 QUICK ?= 
 VIRTUAL_ENV ?= .virtualenv-$(PYTHON_BASENAME)
 PIP ?= $(VIRTUAL_ENV)/bin/pip
@@ -17,19 +18,28 @@ SPHINX_BUILDDIR ?= $(SPHINX_SOURCEDIR)/_build
 
 .PHONY: clean doc install install-dev lint test
 
-install: $(VIRTUALENV_PATH) $(WHEELHOUSE)
+# Installs the local project dependencies.
+install: $(VIRTUAL_ENV)
 	if [ -z "$(QUICK)" ]; then \
-	    $(PIP) install -Ue "file://`pwd`#egg=django_includes"; \
+	    $(PIP) install -Ur $(PYTHON_REQUIREMENTS_FILE) ; \
 	fi
 
-# Setup the local virtualenv.
+# Installs the local project dependencies, including development-only libraries.
+install-dev: $(VIRTUAL_ENV)
+	if [ -z "$(QUICK)" ]; then \
+	    $(PIP) install -Ur $(PYTHON_REQUIREMENTS_DEV_FILE) ; \
+	fi
+
+# Cleans up the local mess.
+clean:
+	rm -rf build
+	rm -rf dist
+
+# Setup the local virtualenv, or use the one provided by the current environment.
 $(VIRTUAL_ENV):
 	virtualenv -p $(PYTHON) $(VIRTUAL_ENV)
-	$(PIP) install -U pip\>=8.0,\<9.0 wheel\>=0.24,\<1.0
+	$(PIP) install -U pip\>=8.1.2,\<9 wheel\>=0.29,\<1.0
 	ln -fs $(VIRTUAL_ENV)/bin/activate activate-$(PYTHON_BASENAME)
-
-clean:
-	rm -rf $(VIRTUAL_ENV)
 
 lint: install-dev
 	$(VIRTUAL_ENV)/bin/pylint --py3k django_includes -f html > pylint.html
@@ -39,13 +49,3 @@ test: install-dev
 
 doc: install-dev
 	$(SPHINX_BUILD) -b html -D latex_paper_size=a4 $(SPHINX_OPTS) $(SPHINX_SOURCEDIR) $(SPHINX_BUILDDIR)/html
-
-install: $(VIRTUALENV_PATH) $(WHEELHOUSE)
-	if [ -z "$(QUICK)" ]; then \
-	    $(PIP) install -Ue "file://`pwd`#egg=django_includes"; \
-	fi
-
-install-dev: $(VIRTUALENV_PATH) $(WHEELHOUSE)
-	if [ -z "$(QUICK)" ]; then \
-	    $(PIP) install -Ue "file://`pwd`#egg=django_includes[dev]"; \
-	fi

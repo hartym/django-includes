@@ -3,8 +3,8 @@ description = ''
 license = 'Apache License, Version 2.0'
 
 # Project site and download urls
-url = ''
-download_url = ''
+url = 'https://github.com/hartym/django-includes'
+download_url = 'https://github.com/hartym/django-includes/archive/{version}.tar.gz'
 
 # Author informations (for setup.py, not yet implemented)
 author = 'Romain Dorgueil'
@@ -41,25 +41,3 @@ extras_require = {
     ]
 }
 
-entry_points = {
-    'console_scripts': [
-    ]
-}
-
-@listen('edgy.project.feature.make.on_generate')
-def on_make_generate_add_development(event):
-    event.makefile.add_target('install', '''
-        if [ -z "$(QUICK)" ]; then \\
-            $(PIP) install -Ue "file://`pwd`#egg={name}"; \\
-        fi
-    '''.format(name=name), deps=('$(VIRTUALENV_PATH)', '$(WHEELHOUSE)'), phony=True)
-
-    event.makefile.add_target('install-dev', '''
-        if [ -z "$(QUICK)" ]; then \\
-            $(PIP) install -Ue "file://`pwd`#egg={name}[dev]"; \\
-        fi
-    '''.format(name=name), deps=('$(VIRTUALENV_PATH)', '$(WHEELHOUSE)'), phony=True)
-
-    event.makefile.set_deps('doc', deps=('install-dev', ))
-    event.makefile.set_deps('lint', deps=('install-dev', ))
-    event.makefile.set_deps('test', deps=('install-dev', ))

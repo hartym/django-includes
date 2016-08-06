@@ -10,19 +10,6 @@ def read(filename, flt=None):
         content = f.read().strip()
         return flt(content) if callable(flt) else content
 
-def requirements_filter(c):
-    install_requires = []
-    for requirement in tolines(c):
-        _pos = requirement.find('#egg=')
-        if _pos != -1:
-            requirement = requirement[_pos+5:].strip()
-        _pos = requirement.find('#')
-        if _pos != -1:
-            requirement = requirement[0:_pos].strip()
-        if len(requirement):
-            install_requires.append(requirement)
-    return install_requires
-
 version = read('version.txt')
 
 setup(
@@ -49,7 +36,6 @@ setup(
          'mock >=1.3,<1.4',
          'sphinx',
          'sphinx_rtd_theme']},
-    entry_points = {'console_scripts': []},
-    url = '',
-    download_url = ''.format(version=version),
+    url = 'https://github.com/hartym/django-includes',
+    download_url = 'https://github.com/hartym/django-includes/archive/{version}.tar.gz'.format(version=version),
 )
