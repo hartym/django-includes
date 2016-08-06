@@ -6,6 +6,7 @@
 /.idea
 /.python*-*
 /build
+/doc/_build
 /dist
 /htmlcov
 /pylint.html

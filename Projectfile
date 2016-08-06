@@ -15,10 +15,11 @@ enable_features = {
     'git',
     'make',
     'pytest',
+    'sphinx',
 }
 
 install_requires = [
-    'django >=1.9,<1.10',
+    'django >=1.9',
     'edgy.event >=0.1,<0.2',
     'jinja2 >=2.7,<3.0', # optional ?
     'six',
@@ -47,11 +48,18 @@ entry_points = {
 
 @listen('edgy.project.feature.make.on_generate')
 def on_make_generate_add_development(event):
+    event.makefile.add_target('install', '''
+        if [ -z "$(QUICK)" ]; then \\
+            $(PIP) install -Ue "file://`pwd`#egg={name}"; \\
+        fi
+    '''.format(name=name), deps=('$(VIRTUALENV_PATH)', '$(WHEELHOUSE)'), phony=True)
+
     event.makefile.add_target('install-dev', '''
         if [ -z "$(QUICK)" ]; then \\
             $(PIP) install -Ue "file://`pwd`#egg={name}[dev]"; \\
         fi
     '''.format(name=name), deps=('$(VIRTUALENV_PATH)', '$(WHEELHOUSE)'), phony=True)
 
+    event.makefile.set_deps('doc', deps=('install-dev', ))
     event.makefile.set_deps('lint', deps=('install-dev', ))
     event.makefile.set_deps('test', deps=('install-dev', ))
