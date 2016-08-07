@@ -21,10 +21,10 @@ enable_features = {
 install_requires = [
     'django >=1.9',
     'edgy.event >=0.1,<0.2',
-    'jinja2 >=2.8,<3.0', # optional ?
+    'jinja2 >=2.8,<3.0',  # optional ?
     'six',
     'requests >=2,<3',
-    'CacheControl >=0.11.6,<0.12',
+    'CacheControl >=0.11,<0.12',
     'PyJWT >=1.4,<1.5',
 ]
 
@@ -40,4 +40,3 @@ extras_require = {
         'sphinx_rtd_theme',
     ]
 }
-
