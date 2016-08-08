@@ -5,7 +5,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 import re
 from http.cookiejar import split_header_words
 
-import cachecontrol
 import requests
 
 esi_include_re = re.compile(b'<esi:include src="([^"]+)" />')
@@ -21,13 +20,10 @@ class EdgeSideIncludesMiddleware(object):
 
     """
 
-    def __init__(self, application, debug=False):
+    def __init__(self, application, session=None):
         self.application = application
         self.environ = None
-        if debug:
-            self.session = requests.session()
-        else:
-            self.session = cachecontrol.CacheControl(requests.session())
+        self.session = session or requests.Session()
 
     def include(self, match):
         # cookies forwarding is required, especially for session and csrf
