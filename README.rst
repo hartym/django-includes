@@ -10,6 +10,20 @@ Install
 
 * Add 'django_includes' to INSTALLED_APPS.
 * Add DjangoIncludesExtension to Jinja2 environment.
+
+.. code-block:: python
+
+    from django_includes.jinja2 import DjangoIncludesExtension
+
+    def environment(**options):
+        env = Environment(**options)
+
+        # your logic here
+
+        env.add_extension(DjangoIncludesExtension)
+
+        return env
+
 * Use `{{ render_sync(request, 'mused.views.MusicGroupListView', musicgenre=object) }}` in templates.
 
 Now, that's only the "synchronous render",
@@ -36,5 +50,7 @@ Add hinclude to your layout
     <html lang="en" xmlns:hx="http://purl.org/NET/hinclude">
     <head>
         <script src="{{ static('hinclude.js') }}"></script>
+
+* Use `{{ render_hinclude(request, 'mused.views.MusicGroupListView', musicgenre=object) }}` in templates.
 
 Note that this will use json web tokens to encode the parameters, using your django secret as a "seed" for encryption.

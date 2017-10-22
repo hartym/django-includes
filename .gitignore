@@ -3,6 +3,7 @@
 *.egg
 *.egg-info
 *.egg-info/
+*.iml
 *.log
 *.manifest
 *.mo
@@ -31,12 +32,12 @@
 /.coverage
 /.idea
 /.python*-*
+/.release
 /build
 /dist
 /doc/_build
 /htmlcov
 /pylint.html
->>>>>>> origin/master
 ENV/
 __pycache__/
 build/
