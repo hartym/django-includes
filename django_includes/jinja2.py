@@ -1,8 +1,9 @@
 import html
+
 import jwt
 import six
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.module_loading import import_string
 from jinja2.ext import Extension
 from markupsafe import Markup
@@ -28,17 +29,21 @@ def get_markup(view, response, via='render'):
         response.render()
 
     if DEBUG_INCLUDES:
-        return Markup(('<div style="outline: 1px solid #B9B280; padding: 1em; position: relative;">'
-                       '  <em style="color: white; position: absolute; right: -1px; top: -1px; padding: 0.15em 0.5em; font-size: 10px; background-color: #B9B280">'
-                       '    {} ({}){}'
-                       '  </em>'
-                       '  {} '
-                       '</div>').format(
-            html.escape(get_view_class(view).__name__),
-            via,
-            headers,
-            response.render().content.decode(encoding='utf-8'),
-        ))
+        return Markup(
+            (
+                '<div style="outline: 1px solid #B9B280; padding: 1em; position: relative;">'
+                '  <em style="color: white; position: absolute; right: -1px; top: -1px; padding: 0.15em 0.5em; font-size: 10px; background-color: #B9B280">'
+                '    {} ({}){}'
+                '  </em>'
+                '  {} '
+                '</div>'
+            ).format(
+                html.escape(get_view_class(view).__name__),
+                via,
+                headers,
+                response.render().content.decode(encoding='utf-8'),
+            )
+        )
 
     return Markup(response.content.decode(encoding='utf-8'))
 
@@ -47,11 +52,12 @@ def render(request, view, *args, **kwargs):
     if isinstance(view, six.string_types):
         view = import_string(view)
 
-    if hasattr(type(view), 'as_view'):
+    if hasattr(view, 'as_view'):
+        view = view.as_view()
+    elif hasattr(type(view), 'as_view'):
         view = type(view).as_view()
 
     response = view(request, *args, **kwargs)
-
     request.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
 
     return get_markup(view, response, 'render')
@@ -65,15 +71,27 @@ def include_tag(route, request, view_name, view_args, view_kwargs):
     else:
         raise ValueError('Unsupported inclusion type.')
 
-    return Markup('<{} src="{}" />'.format(
-        tag,
-        request.build_absolute_uri(reverse(route, kwargs={
-            'token': jwt.encode({
-                'v': view_name,
-                'a': view_args,
-                'k': view_kwargs
-            }, settings.SECRET_KEY, )
-        }))))
+    return Markup(
+        '<{} src="{}" />'.format(
+            tag,
+            request.build_absolute_uri(
+                reverse(
+                    route,
+                    kwargs={
+                        'token':
+                        jwt.encode(
+                            {
+                                'v': view_name,
+                                'a': view_args,
+                                'k': view_kwargs
+                            },
+                            settings.SECRET_KEY,
+                        ).decode('utf-8')
+                    }
+                )
+            )
+        )
+    )
 
 
 def render_hinclude(request, view_name, *args, **kwargs):

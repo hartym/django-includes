@@ -121,7 +121,6 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
-
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -246,29 +245,28 @@ htmlhelp_basename = 'DjangoIncludesdoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-     # The paper size ('letterpaper' or 'a4paper').
-     #
-     # 'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    #
+    # 'papersize': 'letterpaper',
 
-     # The font size ('10pt', '11pt' or '12pt').
-     #
-     # 'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    #
+    # 'pointsize': '10pt',
 
-     # Additional stuff for the LaTeX preamble.
-     #
-     # 'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    #
+    # 'preamble': '',
 
-     # Latex figure (float) alignment
-     #
-     # 'figure_align': 'htbp',
+    # Latex figure (float) alignment
+    #
+    # 'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'DjangoIncludes.tex', 'Django Includes Documentation',
-     'Romain Dorgueil', 'manual'),
+    (master_doc, 'DjangoIncludes.tex', 'Django Includes Documentation', 'Romain Dorgueil', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -297,20 +295,15 @@ latex_documents = [
 #
 # latex_domain_indices = True
 
-
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'djangoincludes', 'Django Includes Documentation',
-     [author], 1)
-]
+man_pages = [(master_doc, 'djangoincludes', 'Django Includes Documentation', [author], 1)]
 
 # If true, show URL addresses after external links.
 #
 # man_show_urls = False
-
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -318,9 +311,10 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'DjangoIncludes', 'Django Includes Documentation',
-     author, 'DjangoIncludes', 'One line description of project.',
-     'Miscellaneous'),
+    (
+        master_doc, 'DjangoIncludes', 'Django Includes Documentation', author, 'DjangoIncludes',
+        'One line description of project.', 'Miscellaneous'
+    ),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -338,7 +332,6 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #
 # texinfo_no_detailmenu = False
-
 
 # -- Options for Epub output ----------------------------------------------
 

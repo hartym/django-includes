@@ -24,9 +24,7 @@ def include_view(request, token, via):
     if wrapped_response.status_code >= 300:
         return wrapped_response
 
-    response = HttpResponse(
-        get_markup(view, wrapped_response, via)
-    )
+    response = HttpResponse(get_markup(view, wrapped_response, via))
 
     for k, v in wrapped_response.items():
         response[k] = v
