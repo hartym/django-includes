@@ -1,5 +1,9 @@
 -e .[dev]
-coverage==4.4.1
-py==1.4.34
+attrs==17.3.0
+coverage==4.4.2
+pluggy==0.6.0
+py==1.5.2
 pytest-cov==2.5.1
-pytest==3.2.3
+pytest==3.3.1
+six==1.11.0
+yapf==0.20.0

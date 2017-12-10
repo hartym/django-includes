@@ -1,12 +1,11 @@
 -e .
-cachecontrol==0.11.7
-certifi==2017.7.27.1
+cachecontrol==0.12.3
+certifi==2017.11.5
 chardet==3.0.4
-django==1.11.6
+django==2.0
 idna==2.6
-jinja2==2.9.6
-markupsafe==1.0
-pyjwt==1.4.2
-pytz==2017.2
+msgpack-python==0.4.8
+pyjwt==1.5.3
+pytz==2017.3
 requests==2.18.4
 urllib3==1.22

@@ -54,11 +54,10 @@ setup(
     classifiers=classifiers,
     packages=find_packages(exclude=['ez_setup', 'example', 'test']),
     include_package_data=True,
-    install_requires=[
-        'CacheControl (>= 0.11, < 0.12)', 'PyJWT (>= 1.4, < 1.5)', 'django', 'jinja2 (>= 2.8, < 3.0)',
-        'requests (>= 2, < 3)'
-    ],
-    extras_require={'dev': ['coverage (>= 4.4, < 5.0)', 'pytest (>= 3.1, < 4.0)', 'pytest-cov (>= 2.5, < 3.0)']},
+    install_requires=['CacheControl (~= 0.12)', 'PyJWT (~= 1.5)', 'django (>= 1.10)', 'requests (~= 2.18)'],
+    extras_require={
+        'dev': ['coverage (>= 4.4, < 5.0)', 'pytest (>= 3.1, < 4.0)', 'pytest-cov (>= 2.5, < 3.0)', 'yapf']
+    },
     url='https://github.com/hartym/django-includes',
     download_url='https://github.com/hartym/django-includes/archive/{version}.tar.gz'.format(version=version),
 )
