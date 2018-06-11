@@ -31,6 +31,7 @@
 /.cache
 /.coverage
 /.idea
+/.medikit
 /.python*-*
 /.release
 /build

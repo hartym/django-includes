@@ -20,10 +20,11 @@ python.setup(
 )
 
 python.add_requirements(
-    'django >=1.10',
-    'requests ~=2.18',
     'CacheControl ~=0.12',
     'PyJWT ~=1.5',
+    'django ~=2.0',
+    'jinja2 ~=2.10',
+    'requests ~=2.18',
 )
 
 # vim: ft=python:
