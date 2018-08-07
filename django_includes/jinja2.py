@@ -1,7 +1,6 @@
 import html
 
 import jwt
-import six
 from django.conf import settings
 from django.urls import reverse
 from django.utils.module_loading import import_string
@@ -49,7 +48,7 @@ def get_markup(view, response, via='render'):
 
 
 def render(request, view, *args, **kwargs):
-    if isinstance(view, six.string_types):
+    if isinstance(view, str):
         view = import_string(view)
 
     if hasattr(view, 'as_view'):
