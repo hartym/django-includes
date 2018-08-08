@@ -6,7 +6,6 @@ git = require('git')
 make = require('make')
 pytest = require('pytest')
 python = require('python')
-yapf = require('yapf')
 
 python.setup(
     name='django_includes',
@@ -26,5 +25,13 @@ python.add_requirements(
     'jinja2 ~=2.10',
     'requests ~=2.18',
 )
+
+
+@listen(make.on_generate)
+def on_make_generate(event):
+    event.makefile.add_target('format', '''
+        black -l 120 --exclude '/(\.git|\.hg|\.mypy_cache|\.tox|\.venv|_build|buck-out|build|dist|node_modules|{{"{{cookiecutter.name}}"}})/' .
+        isort -rc -y -s node_modules .
+    ''', phony=True)
 
 # vim: ft=python:

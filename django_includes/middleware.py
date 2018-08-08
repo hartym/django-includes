@@ -23,7 +23,7 @@ class EdgeSideIncludesMiddleware(object):
 
     def include(self, match):
         # cookies forwarding is required, especially for session and csrf
-        cookies = self.environ.get('HTTP_COOKIE', '') or None
+        cookies = self.environ.get("HTTP_COOKIE", "") or None
 
         if cookies:
             cookies = dict(split_header_words([cookies])[0])

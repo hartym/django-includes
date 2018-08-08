@@ -7,4 +7,5 @@ def patch_http_development_server():
 
     """
     from wsgiref import simple_server
+
     simple_server.ServerHandler.http_version = "1.1"

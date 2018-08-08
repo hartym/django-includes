@@ -14,13 +14,13 @@ from django_includes.jinja2 import get_markup
 
 def include_view(request, token, via):
     data = jwt.decode(token, settings.SECRET_KEY)
-    view = import_string(data['v'])
-    if hasattr(view, 'as_view'):  # xxx not a good idea, better use already constructed views.
+    view = import_string(data["v"])
+    if hasattr(view, "as_view"):  # xxx not a good idea, better use already constructed views.
         view = view.as_view()
 
     # build wrapped response
-    request.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
-    wrapped_response = view(request, *data['a'], **data['k'])
+    request.META["HTTP_X_REQUESTED_WITH"] = "XMLHttpRequest"
+    wrapped_response = view(request, *data["a"], **data["k"])
     if wrapped_response.status_code >= 300:
         return wrapped_response
 
@@ -33,9 +33,9 @@ def include_view(request, token, via):
 
 
 class CacheableTemplateView(TemplateView):
-    template_name = 'promised_views_app/cacheable.html'
+    template_name = "promised_views_app/cacheable.html"
     use_etag = True
-    cache_control = 'private'
+    cache_control = "private"
     max_age = 86400
 
     _etag = None
@@ -53,7 +53,7 @@ class CacheableTemplateView(TemplateView):
         # if we're using etag and the browser knows about the actual page etag, we can bypass dispatching the request
         # for real and just tell the browser its cache is up to date.
         etag = self.get_etag()
-        if etag and etag == request.META.get('HTTP_IF_NONE_MATCH', None):
+        if etag and etag == request.META.get("HTTP_IF_NONE_MATCH", None):
             return HttpResponseNotModified()
 
         # time to get to work, my dear.
@@ -64,17 +64,17 @@ class CacheableTemplateView(TemplateView):
             # build expires header. Not used in http 1.1, but maybe useful for older browsers? Or maybe completely
             # useless, but also harmless.
             if self.max_age:
-                response['Expires'] = http_date((timezone.now() + timedelta(seconds=self.max_age)).timestamp())
+                response["Expires"] = http_date((timezone.now() + timedelta(seconds=self.max_age)).timestamp())
 
             # build cache-control header
             if self.cache_control:
                 cache_control = [self.cache_control]
-                if self.max_age and not self.cache_control.startswith('no-'):
-                    cache_control.append('max-age={}'.format(self.max_age))
-                response['Cache-Control'] = ', '.join(cache_control)
+                if self.max_age and not self.cache_control.startswith("no-"):
+                    cache_control.append("max-age={}".format(self.max_age))
+                response["Cache-Control"] = ", ".join(cache_control)
 
             if etag:
-                response['ETag'] = etag
+                response["ETag"] = etag
 
         return response
 
