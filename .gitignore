@@ -33,6 +33,7 @@
 /.idea
 /.medikit
 /.python*-*
+/.pytest_cache
 /.release
 /build
 /dist
