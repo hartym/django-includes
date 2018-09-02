@@ -62,6 +62,19 @@ def render(request, view, *args, **kwargs):
     return get_markup(view, response, "render")
 
 
+def get_url(route, request, name, args, kwargs):
+    return request.build_absolute_uri(
+        reverse(
+            route,
+            kwargs={"token": jwt.encode({"v": name, "a": args, "k": kwargs}, settings.SECRET_KEY).decode("utf-8")},
+        )
+    )
+
+
+def get_async_url(request, view_name, *args, **kwargs):
+    return get_url("async", request, view_name, args, kwargs)
+
+
 def include_tag(route, request, view_name, view_args, view_kwargs):
     if route == "hinclude":
         tag = "hx:include"
@@ -70,21 +83,7 @@ def include_tag(route, request, view_name, view_args, view_kwargs):
     else:
         raise ValueError("Unsupported inclusion type.")
 
-    return Markup(
-        '<{} src="{}" />'.format(
-            tag,
-            request.build_absolute_uri(
-                reverse(
-                    route,
-                    kwargs={
-                        "token": jwt.encode(
-                            {"v": view_name, "a": view_args, "k": view_kwargs}, settings.SECRET_KEY
-                        ).decode("utf-8")
-                    },
-                )
-            ),
-        )
-    )
+    return Markup('<{} src="{}" />'.format(tag, get_url(route, request, view_name, view_args, view_kwargs)))
 
 
 def render_hinclude(request, view_name, *args, **kwargs):
@@ -101,3 +100,4 @@ class DjangoIncludesExtension(Extension):
         environment.globals["render_sync"] = render
         environment.globals["render_hinclude"] = render_hinclude
         environment.globals["render_esi"] = render_esi
+        environment.globals["async_url"] = get_async_url
