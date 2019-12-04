@@ -2,7 +2,7 @@
 cachecontrol==0.12.5
 certifi==2019.9.11
 chardet==3.0.4
-django==2.2.5
+django==2.2.8
 idna==2.8
 jinja2==2.10.1
 markupsafe==1.1.1
