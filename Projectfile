@@ -2,36 +2,22 @@
 
 from medikit import require
 
-git = require('git')
-make = require('make')
-pytest = require('pytest')
-python = require('python')
+git = require("git")
+make = require("make")
+pytest = require("pytest")
+python = require("python")
+format = require("format")
 
 python.setup(
-    name='django_includes',
-    description=
-    'Include django views as a subparts of other django views, using either HTTP (with esi or hinclude) or direct render.',
-    license='Apache License, Version 2.0',
-    url='https://github.com/hartym/django-includes',
-    download_url='https://github.com/hartym/django-includes/archive/{version}.tar.gz',
-    author='Romain Dorgueil',
-    author_email='romain@dorgueil.net',
+    name="django_includes",
+    description="Include django views as a subparts of other django views, using either HTTP (with esi or hinclude) or direct render.",
+    license="Apache License, Version 2.0",
+    url="https://github.com/hartym/django-includes",
+    download_url="https://github.com/hartym/django-includes/archive/{version}.tar.gz",
+    author="Romain Dorgueil",
+    author_email="romain@dorgueil.net",
 )
 
-python.add_requirements(
-    'CacheControl ~=0.12',
-    'PyJWT ~=1.5',
-    'django ~=2.0',
-    'jinja2 ~=2.10',
-    'requests ~=2.18',
-)
-
-
-@listen(make.on_generate)
-def on_make_generate(event):
-    event.makefile.add_target('format', '''
-        black -l 120 --exclude '/(\.git|\.hg|\.mypy_cache|\.tox|\.venv|_build|buck-out|build|dist|node_modules|{{"{{cookiecutter.name}}"}})/' .
-        isort -rc -y -s node_modules .
-    ''', phony=True)
+python.add_requirements("CacheControl ~=0.12", "PyJWT ~=1.5", "django >=2.0,<4.0", "jinja2 ~=2.10", "requests ~=2.18")
 
 # vim: ft=python:
