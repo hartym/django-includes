@@ -2,22 +2,25 @@
 
 from medikit import require
 
-git = require("git")
-make = require("make")
-pytest = require("pytest")
-python = require("python")
-format = require("format")
+require("git")
+require("make")
+require("pytest")
+require("format")
 
-python.setup(
-    name="django_includes",
-    description="Include django views as a subparts of other django views, using either HTTP (with esi or hinclude) or direct render.",
-    license="Apache License, Version 2.0",
-    url="https://github.com/hartym/django-includes",
-    download_url="https://github.com/hartym/django-includes/archive/{version}.tar.gz",
-    author="Romain Dorgueil",
-    author_email="romain@dorgueil.net",
-)
 
-python.add_requirements("CacheControl ~=0.12", "PyJWT ~=1.5", "django >=2.0,<4.0", "jinja2 ~=2.10", "requests ~=2.18")
+with require("python") as python:
+    python.setup(
+        name="django_includes",
+        description="Include django views as a subparts of other django views, using either HTTP (with esi or hinclude) or direct render.",
+        license="Apache License, Version 2.0",
+        url="https://github.com/hartym/django-includes",
+        download_url="https://github.com/hartym/django-includes/archive/{version}.tar.gz",
+        author="Romain Dorgueil",
+        author_email="romain@dorgueil.net",
+    )
+
+    python.add_requirements(
+        "CacheControl ~=0.12", "PyJWT ~=1.7", "django >=2.0,<4.0", "jinja2 ~=2.11", "requests ~=2.23"
+    )
 
 # vim: ft=python:
