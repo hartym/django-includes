@@ -3,7 +3,7 @@ asgiref==3.2.7
 cachecontrol==0.12.6
 certifi==2020.4.5.1
 chardet==3.0.4
-django==3.0.6
+django==3.1.13
 idna==2.9
 jinja2==2.11.2
 markupsafe==1.1.1
