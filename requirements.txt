@@ -8,7 +8,7 @@ idna==2.9
 jinja2==2.11.2
 markupsafe==1.1.1
 msgpack==1.0.0
-pyjwt==1.7.1
+pyjwt==2.4.0
 pytz==2020.1
 requests==2.23.0
 sqlparse==0.3.1

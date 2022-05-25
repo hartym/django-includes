@@ -58,7 +58,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "CacheControl ~= 0.12",
-        "PyJWT ~= 1.7",
+        "PyJWT >= 1.7,< 3.0",
         "django >= 2.0, < 4.0",
         "jinja2 ~= 2.11",
         "requests ~= 2.23",
